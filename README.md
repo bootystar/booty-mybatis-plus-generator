@@ -1,0 +1,1 @@
+# booty-mybatis-plus-generator
