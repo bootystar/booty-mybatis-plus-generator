@@ -1,13 +1,11 @@
 package io.github.bootystar.mybatisplus.generator.core;
 
-import lombok.Data;
 
 /**
  * 通用返回类型
  * @author booty
  * @since 2023/7/13 11:03
  */
-@Data
 public class Result<T> {
     public static final Integer SUCCESS = 1;
     public static final Integer FAILURE = 2;
@@ -62,4 +60,27 @@ public class Result<T> {
         return result;
     }
 
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }

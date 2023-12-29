@@ -2,11 +2,8 @@ package io.github.bootystar.mybatisplus.generator;
 
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
-import io.github.bootystar.mybatisplus.generator.config.ConfigBase;
 import io.github.bootystar.mybatisplus.generator.config.child.DefaultConfig;
-import io.github.bootystar.mybatisplus.generator.config.child.ParentConfig;
 import io.github.bootystar.mybatisplus.generator.core.Result;
-import lombok.Getter;
 
 import java.io.File;
 import java.util.Arrays;
@@ -15,9 +12,7 @@ import java.util.LinkedList;
 /**
  * @author booty
  * @since 2023/7/13 15:34
- * @see  ConstVal;
  */
-
 public class CrudGenerator {
 
     protected DataSourceConfig.Builder dataSourceConfigBuilder ;

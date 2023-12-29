@@ -2,14 +2,11 @@ package io.github.bootystar.mybatisplus.generator.config.child;
 
 import io.github.bootystar.mybatisplus.generator.config.ConfigBase;
 import io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder;
-import lombok.Data;
-import lombok.Getter;
 
 /**
  * @author booty
  * @since 2023/9/15 14:49
  */
-@Data
 public class ParentConfig extends ConfigBase {
 
     /**
@@ -22,6 +19,13 @@ public class ParentConfig extends ConfigBase {
      */
     protected boolean showMapperMethod = true;
 
+    public boolean isShowServiceImplMethod() {
+        return showServiceImplMethod;
+    }
+
+    public boolean isShowMapperMethod() {
+        return showMapperMethod;
+    }
 
     /**
      * 构造器

@@ -7,7 +7,6 @@ import io.github.bootystar.mybatisplus.generator.core.CustomMapper;
 import io.github.bootystar.mybatisplus.generator.core.CustomService;
 import io.github.bootystar.mybatisplus.generator.core.CustomServiceImpl;
 import io.github.bootystar.mybatisplus.generator.core.Result;
-import lombok.Getter;
 
 import java.io.File;
 import java.util.Arrays;
@@ -16,9 +15,7 @@ import java.util.LinkedList;
 /**
  * @author booty
  * @since 2023/7/13 15:34
- * @see  ConstVal;
  */
-
 public class ParentGenerator  {
 
     protected DataSourceConfig.Builder dataSourceConfigBuilder ;

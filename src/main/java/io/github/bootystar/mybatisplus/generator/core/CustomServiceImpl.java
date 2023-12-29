@@ -9,7 +9,8 @@ import com.alibaba.excel.read.listener.ReadListener;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
 import java.io.InputStream;
@@ -26,8 +27,8 @@ import java.util.stream.Collectors;
  * @author booty
  * @since 2023/8/21 9:44
  */
-@Slf4j
 public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends ServiceImpl<M, T> implements CustomService<T,V> {
+    private static final Logger log = LoggerFactory.getLogger(CustomServiceImpl.class);
 
     @Override
     public <S> V insertByDTO(S DTO) {

@@ -4,9 +4,9 @@ package io.github.bootystar.mybatisplus.generator.config;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.JdbcType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -19,9 +19,8 @@ import java.util.stream.Collectors;
  * @author booty
  * @since 2023/12/19
  */
-@Data
-@Slf4j
 public abstract class ConfigBase implements IConfig {
+    private static final Logger log = LoggerFactory.getLogger(ConfigBase.class);
 
     //--------------常量---------------
     protected final String shift3 = "#";
@@ -255,4 +254,135 @@ public abstract class ConfigBase implements IConfig {
     protected boolean importOnVO;
 
 
+    public String getShift3() {
+        return shift3;
+    }
+
+    public String getShift4() {
+        return shift4;
+    }
+
+    public String getShift5() {
+        return shift5;
+    }
+
+    public String getShift8() {
+        return shift8;
+    }
+
+    public String getShiftLeft() {
+        return shiftLeft;
+    }
+
+    public String getShiftRight() {
+        return shiftRight;
+    }
+
+    public String getDTOPackage() {
+        return DTOPackage;
+    }
+
+    public String getVOPackage() {
+        return VOPackage;
+    }
+
+    public String getReturnResultClass() {
+        return returnResultClass;
+    }
+
+    public String getReturnResultClassPackage() {
+        return returnResultClassPackage;
+    }
+
+    public boolean isReturnResultGenericType() {
+        return returnResultGenericType;
+    }
+
+    public String getReturnResultDefaultStaticMethodName() {
+        return returnResultDefaultStaticMethodName;
+    }
+
+    public boolean isRequestBody() {
+        return requestBody;
+    }
+
+    public boolean isEnableValidated() {
+        return enableValidated;
+    }
+
+    public boolean isEnableOrigins() {
+        return enableOrigins;
+    }
+
+    public boolean isAllPost() {
+        return allPost;
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public boolean isFileOverride() {
+        return fileOverride;
+    }
+
+    public boolean isResultMapForVO() {
+        return resultMapForVO;
+    }
+
+    public boolean isFieldAnnotationOnVO() {
+        return fieldAnnotationOnVO;
+    }
+
+    public Collection<String> getInsertExcludeFields() {
+        return insertExcludeFields;
+    }
+
+    public Collection<String> getUpdateExcludeFields() {
+        return updateExcludeFields;
+    }
+
+    public Map<String, Boolean> getOrderColumnMap() {
+        return orderColumnMap;
+    }
+
+    public String getJavaApiPackage() {
+        return javaApiPackage;
+    }
+
+    public boolean isGenerateInsert() {
+        return generateInsert;
+    }
+
+    public boolean isGenerateUpdate() {
+        return generateUpdate;
+    }
+
+    public boolean isGenerateDelete() {
+        return generateDelete;
+    }
+
+    public boolean isGenerateSelect() {
+        return generateSelect;
+    }
+
+    public boolean isGenerateImport() {
+        return generateImport;
+    }
+
+    public boolean isGenerateExport() {
+        return generateExport;
+    }
+
+    public boolean isRestStyle() {
+        return restStyle;
+    }
+
+    public boolean isExportOnVO() {
+        return exportOnVO;
+    }
+
+    public boolean isImportOnVO() {
+        return importOnVO;
+    }
 }
