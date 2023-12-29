@@ -185,6 +185,7 @@ public class ${table.controllerName} {
     }
 #end
 #if(${generateDelete})
+
     #if(${springdoc})
     @Operation(summary = "删除")
     #elseif(${swagger})
