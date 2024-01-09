@@ -1,4 +1,4 @@
-package io.github.bootystar.mybatisplus.generator.engine;
+package io.github.bootystar.mybatisplus.engine;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
-import io.github.bootystar.mybatisplus.generator.config.IConfig;
+import io.github.bootystar.mybatisplus.config.IConfig;
 
 import java.io.File;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Optional;
 /**
  * 自定义Velocity引擎
  * @author booty
- * @since 2023/7/13 13:40
+ *
  */
 public class EnhanceVelocityTemplateEngine extends VelocityTemplateEngine {
 

@@ -1,7 +1,7 @@
-package io.github.bootystar.mybatisplus.generator.config.child;
+package io.github.bootystar.mybatisplus.config.child;
 
-import io.github.bootystar.mybatisplus.generator.config.ConfigBase;
-import io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder;
+import io.github.bootystar.mybatisplus.config.ConfigBase;
+import io.github.bootystar.mybatisplus.config.ConfigBaseBuilder;
 
 /**
  * @author booty

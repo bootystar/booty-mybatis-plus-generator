@@ -1,11 +1,11 @@
-package io.github.bootystar.mybatisplus.generator.config.child;
+package io.github.bootystar.mybatisplus.config.child;
 
-import io.github.bootystar.mybatisplus.generator.config.ConfigBase;
-import io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder;
+import io.github.bootystar.mybatisplus.config.ConfigBase;
+import io.github.bootystar.mybatisplus.config.ConfigBaseBuilder;
 
 /**
  * @author booty
- * @since 2023/9/15 14:49
+ *
  */
 public class ParentConfig extends ConfigBase {
 
@@ -51,7 +51,7 @@ public class ParentConfig extends ConfigBase {
          * @param b b
          * @return {@code U }
          * @author booty
-         * @since 2023/09/18 11:32
+         *
          */
         public Builder showServiceImplMethod(boolean b) {
             this.config.showServiceImplMethod = b;
@@ -64,7 +64,7 @@ public class ParentConfig extends ConfigBase {
          * @param b b
          * @return {@code U }
          * @author booty
-         * @since 2023/09/18 11:32
+         *
          */
         public Builder showMapperMethod(boolean b) {
             this.config.showMapperMethod = b;

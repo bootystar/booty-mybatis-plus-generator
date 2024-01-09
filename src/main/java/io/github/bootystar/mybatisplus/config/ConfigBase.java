@@ -1,4 +1,4 @@
-package io.github.bootystar.mybatisplus.generator.config;
+package io.github.bootystar.mybatisplus.config;
 
 
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;

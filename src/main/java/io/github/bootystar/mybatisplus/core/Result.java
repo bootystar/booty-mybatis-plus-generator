@@ -1,10 +1,10 @@
-package io.github.bootystar.mybatisplus.generator.core;
+package io.github.bootystar.mybatisplus.core;
 
 
 /**
  * 通用返回类型
  * @author booty
- * @since 2023/7/13 11:03
+ *
  */
 public class Result<T> {
     public static final Integer SUCCESS = 1;
