@@ -1,4 +1,4 @@
-package io.github.bootystar.mybatisplus.core;
+package io.github.bootystar.mybatisplus.generator.core;
 
 
 import com.alibaba.excel.EasyExcel;

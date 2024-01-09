@@ -3,8 +3,8 @@ package io.github.bootystar.mybatisplus.generator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import io.github.bootystar.mybatisplus.config.IConfig;
-import io.github.bootystar.mybatisplus.engine.EnhanceVelocityTemplateEngine;
+import io.github.bootystar.mybatisplus.generator.config.IConfig;
+import io.github.bootystar.mybatisplus.generator.engine.EnhanceVelocityTemplateEngine;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

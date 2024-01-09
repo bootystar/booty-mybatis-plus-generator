@@ -2,8 +2,8 @@ package io.github.bootystar.mybatisplus.generator;
 
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
-import io.github.bootystar.mybatisplus.config.child.DefaultConfig;
-import io.github.bootystar.mybatisplus.core.Result;
+import io.github.bootystar.mybatisplus.generator.config.child.DefaultConfig;
+import io.github.bootystar.mybatisplus.generator.core.Result;
 
 import java.io.File;
 import java.util.Arrays;
