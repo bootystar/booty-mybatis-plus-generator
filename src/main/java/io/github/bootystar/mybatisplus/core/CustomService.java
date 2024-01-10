@@ -1,4 +1,4 @@
-package io.github.bootystar.mybatisplus.generator.core;
+package io.github.bootystar.mybatisplus.core;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -10,8 +10,8 @@ import java.util.*;
 
 
 /**
+ * 自定义Service接口
  * @author booty
- *
  */
 public interface CustomService<T,V> extends IService<T> {
     <S> V insertByDTO(S DTO);

@@ -1,4 +1,4 @@
-package io.github.bootystar.mybatisplus.generator.core;
+package io.github.bootystar.mybatisplus.core;
 
 
 import com.alibaba.excel.EasyExcel;
@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 
 
 /**
+ * 自定义Service实现类
  * @author booty
- *
  */
 public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends ServiceImpl<M, T> implements CustomService<T,V> {
     private static final Logger log = LoggerFactory.getLogger(CustomServiceImpl.class);

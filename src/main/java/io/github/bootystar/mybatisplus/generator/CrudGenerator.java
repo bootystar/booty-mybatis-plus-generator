@@ -3,15 +3,15 @@ package io.github.bootystar.mybatisplus.generator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import io.github.bootystar.mybatisplus.generator.config.child.DefaultConfig;
-import io.github.bootystar.mybatisplus.generator.core.Result;
+import io.github.bootystar.mybatisplus.core.Result;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
+ * 开放式CRUD代码生成器
  * @author booty
- *
  */
 public class CrudGenerator {
 

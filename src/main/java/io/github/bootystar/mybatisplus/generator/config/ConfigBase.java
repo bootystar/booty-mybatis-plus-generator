@@ -16,8 +16,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * 配置基类
  * @author booty
- * @since 2023/12/19
  */
 public abstract class ConfigBase implements IConfig {
     private static final Logger log = LoggerFactory.getLogger(ConfigBase.class);

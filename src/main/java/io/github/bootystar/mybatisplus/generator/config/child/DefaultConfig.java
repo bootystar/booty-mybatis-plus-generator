@@ -4,8 +4,8 @@ import io.github.bootystar.mybatisplus.generator.config.ConfigBase;
 import io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder;
 
 /**
+ * 默认配置类
  * @author booty
- * @since 2023/12/19
  */
 public class DefaultConfig extends ConfigBase {
 

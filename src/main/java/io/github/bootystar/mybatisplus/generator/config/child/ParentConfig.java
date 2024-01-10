@@ -4,8 +4,8 @@ import io.github.bootystar.mybatisplus.generator.config.ConfigBase;
 import io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder;
 
 /**
+ * 父类生成器配置类
  * @author booty
- *
  */
 public class ParentConfig extends ConfigBase {
 

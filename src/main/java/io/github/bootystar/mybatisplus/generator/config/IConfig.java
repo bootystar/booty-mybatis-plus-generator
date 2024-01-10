@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 配置接口
  * @author booty
- *
  */
 public interface IConfig {
     Map<String, Object>  renderData(TableInfo tableInfo);

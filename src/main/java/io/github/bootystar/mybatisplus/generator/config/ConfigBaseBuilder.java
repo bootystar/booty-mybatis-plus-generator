@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 配置构建器基类
  * @author booty
- * @since 2023/12/19
  */
 public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements IConfigBuilder<T> {
 
