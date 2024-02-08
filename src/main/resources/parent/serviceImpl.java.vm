@@ -41,7 +41,6 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     #if(${generateSelect})
     @Override
     protected void voPostProcess(List<${entity}VO> dataList) {
-        // 查询=>如有必要, 在此处对查询后的VO进行操作(赋值\连表\额外数据拼接), 所有查询的VO都会添加该操作
 
     }
 
@@ -52,9 +51,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public <S> List<${entity}VO> listByDTO(S DTO){
-        List<${entity}VO> voList = this.baseMapper.listByMap(this.toMap(DTO), null);
-        this.voPostProcess(voList);
-        return voList;
+##        List<${entity}VO> voList = baseMapper.listByMap(toMap(DTO), null);
+##        this.voPostProcess(voList);
+##        return voList;
+        return super.listByDTO(DTO);
     }
 
     @Override
@@ -66,18 +66,15 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public <S> ${entity}VO insertByDTO(S DTO) {
-        // 新增=>如有必要 在此处强转DTO为传入参数类型进行参数校验
-        ${entity} entity = this.toEntity(DTO);
-
-        super.save(entity);
-        return toVO(entity);
+##        ${entity} entity = this.toEntity(DTO);
+##        super.save(entity);
+##        return toVO(entity);
+        return super.insertByDTO(DTO);
     }
 ##
 ##    @Override
 ##    public <S> boolean insertBatchByDTO(Collection<S> DTOList) {
-##        // 批量新增=>如有必要 在此处强转DTO为传入参数类型进行参数校验
 ##        List<${entity}> entityList = DTOList.stream().map(this::toEntity).collect(Collectors.toList());
-##
 ##        return super.saveBatch(entityList);
 ##    }
     #end
@@ -85,17 +82,16 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public <S> boolean updateByDTO(S DTO) {
-        // 修改=>如有必要, 在此处强转DTO为传入参数类型进行参数校验
-        ${entity} entity = this.toEntity(DTO);
-
-        return super.updateById(entity);
+##        // 修改=>如有必要, 在此处强转DTO为传入参数类型进行参数校验
+##        ${entity} entity = this.toEntity(DTO);
+##
+        return super.updateByDTO(DTO);
     }
     #end
     #if(${generateDelete})
 
     @Override
     public boolean removeById(Serializable id) {
-        // 删除=>如有必要, 在此处对id进行校验
         return super.removeById(id);
     }
     #end
@@ -103,17 +99,17 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public <U> boolean importExcel(InputStream is, Class<U> clazz) {
-        List<U> cachedDataList = super.processImportData(is,clazz);
-        if (cachedDataList == null || cachedDataList.isEmpty()) return false;
-        List<${entity}> entityList = cachedDataList.stream()
-            .map(e->{
-                // 导入Excel=>如有必要, 在此处对导入前对Excel解析后的参数进行校验赋值
-                ${entity} entity = this.toEntity(e);
-
-
-                return entity;
-            }).collect(Collectors.toList());
-        return super.saveBatch(entityList);
+##        List<U> cachedDataList = super.processImportData(is,clazz);
+##        if (cachedDataList == null || cachedDataList.isEmpty()) return false;
+##        List<${entity}> entityList = cachedDataList.stream()
+##            .map(e->{
+##                ${entity} entity = this.toEntity(e);
+##
+##
+##                return entity;
+##            }).collect(Collectors.toList());
+##        return super.saveBatch(entityList);
+        return super.importExcel(is,clazz);
     }
     #end
 #end

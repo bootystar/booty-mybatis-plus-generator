@@ -9,6 +9,7 @@ import com.alibaba.excel.read.listener.ReadListener;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.github.bootystar.mybatisplus.excel.ConverterHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -29,7 +30,9 @@ import java.util.stream.Collectors;
  */
 public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends ServiceImpl<M, T> implements CustomService<T,V> {
     private static final Logger log = LoggerFactory.getLogger(CustomServiceImpl.class);
-
+    static {
+        ConverterHelper.init();
+    }
     @Override
     public <S> V insertByDTO(S DTO) {
         T entity = this.toEntity(DTO);
@@ -134,22 +137,37 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
     }
 
     protected void voPostProcess(List<V> dataList) {
-        if (dataList==null) {
-            return;
-        }
-        // any children should implement this method if necessary
+
     }
 
     @Override
     public <S,U> void exportExcel(S DTO, OutputStream os, Class<U> clazz) {
         List<U> voList = listByDTO(DTO,clazz);
-        EasyExcel.write(os, clazz).sheet().doWrite(voList);
+        EasyExcel.write(os, clazz)
+//                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+//                .registerConverter(new LocalDateTimeStringConverter())
+//                .registerConverter(new LocalDateStringConverter())
+//                .registerConverter(new DateStringConverter())
+//                .registerConverter(new LongStringConverter())
+//                .registerConverter(new DoubleStringConverter())
+                .sheet().doWrite(voList);
     }
 
     @Override
     public <S,U> void exportExcel(S DTO, OutputStream os, Class<U> clazz, Collection<String> includeFields) {
         List<U> voList = listByDTO(DTO,clazz);
-        EasyExcel.write(os, clazz).includeColumnFieldNames(includeFields).sheet().doWrite(voList);
+        EasyExcel.write(os, clazz).includeColumnFieldNames(includeFields)
+//                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+//                .registerConverter(new LocalDateTimeStringConverter())
+//                .registerConverter(new DateStringConverter())
+//                .registerConverter(new LongStringConverter())
+//                .registerConverter(new DoubleStringConverter())
+                .sheet().doWrite(voList);
+    }
+
+    @Override
+    public <U> void exportTemplate(OutputStream os, Class<U> clazz) {
+        EasyExcel.write(os, clazz).sheet().doWrite(Collections.emptyList());
     }
 
     @Override
@@ -160,14 +178,8 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
         return super.saveBatch(entityList);
     }
 
-    @Override
-    public <U> void exportTemplate(OutputStream os, Class<U> clazz) {
-        EasyExcel.write(os, clazz).sheet().doWrite(Collections.emptyList());
-    }
-
     protected <U> List<T> processImportData(List<U> cachedDataList) {
         List<T> entityList = cachedDataList.stream().map(this::toEntity).collect(Collectors.toList());
-        // any children should implement this method if necessary
         return entityList;
     }
 
@@ -180,8 +192,8 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
             }
 
             @Override
-            public void doAfterAllAnalysed(AnalysisContext context) {
-                //do nothing
+            public void doAfterAllAnalysed(AnalysisContext analysisContext) {
+
             }
         };
         try {

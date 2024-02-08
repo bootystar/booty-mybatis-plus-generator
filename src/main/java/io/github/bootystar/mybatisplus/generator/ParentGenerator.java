@@ -10,6 +10,7 @@ import io.github.bootystar.mybatisplus.core.Result;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 
 /**
@@ -32,6 +33,7 @@ public class ParentGenerator  {
 
     protected ParentConfig.Builder customConfigBuilder = new ParentConfig.Builder();
 
+    protected boolean mapperOnResource = false;
 
     public DataSourceConfig.Builder dataSourceConfigBuilder() {
         return dataSourceConfigBuilder;
@@ -56,12 +58,19 @@ public class ParentGenerator  {
     public TemplateConfig.Builder templateConfigBuilder() {
         return templateConfigBuilder;
     }
+
     public ParentConfig.Builder customConfigBuilder() {
         return customConfigBuilder;
     }
 
     public ParentGenerator(String url, String username, String password) {
         this.dataSourceConfigBuilder = new DataSourceConfig.Builder(url, username, password);
+        init();
+    }
+
+    public ParentGenerator(String url, String username, String password,boolean mapperOnResource) {
+        this.dataSourceConfigBuilder = new DataSourceConfig.Builder(url, username, password);
+        this.mapperOnResource = mapperOnResource;
         init();
     }
 
@@ -72,6 +81,9 @@ public class ParentGenerator  {
         ;
         packageConfigBuilder.parent("io.github.bootystar")
         ;
+        if (mapperOnResource){
+            packageConfigBuilder.pathInfo(Collections.singletonMap(OutputFile.mapper, projectPath + "/src/main/resources/mapper"));
+        }
         strategyConfigBuilder.controllerBuilder().enableRestStyle()
         ;
         strategyConfigBuilder.mapperBuilder().mapperAnnotation(org.apache.ibatis.annotations.Mapper.class).superClass(CustomMapper.class)

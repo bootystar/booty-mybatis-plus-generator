@@ -50,7 +50,6 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     #if(${generateSelect})
     protected void voPostProcess(List<${entity}VO> dataList) {
-        // 查询=>如有必要, 在此处对查询后的VO进行操作(赋值\连表\额外数据拼接), 所有查询的VO都会添加该操作
 
     }
 
@@ -60,7 +59,6 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         dto.setPrimaryKey(id);
         return this.oneByDTO(dto);
     }
-
 
     @Override
     public ${entity}VO oneByDTO(${entity}SelectDTO DTO) {
@@ -74,11 +72,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         return vs.get(0);
     }
 
-
     @Override
     public List<${entity}VO> listByDTO(${entity}SelectDTO DTO){
         List<${entity}VO> voList = this.baseMapper.listByMap(DTO, null);
-        this.voPostProcess(voList);
+        voPostProcess(voList);
         return voList;
     }
 
@@ -92,21 +89,18 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         }
         Page<${entity}VO> page = new Page<>(current, size);
         List<${entity}VO> voList = this.baseMapper.listByMap(DTO, page);
-        this.voPostProcess(voList);
+        voPostProcess(voList);
         page.setRecords(voList);
         return page;
     }
     #end
-
     #if(${generateInsert})
 
     @Override
     public ${entity}VO insertByDTO(${entity}InsertDTO DTO) {
-        // 新增=>如有必要 在此处强转DTO为传入参数类型进行参数校验
         ${entity} entity = new ${entity}();
         BeanUtils.copyProperties(DTO, entity);
         super.save(entity);
-
         ${entity}VO vo = new ${entity}VO();
         BeanUtils.copyProperties(entity, vo);
         return vo;
@@ -116,10 +110,8 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public boolean updateByDTO(${entity}UpdateDTO DTO) {
-        // 修改=>如有必要, 在此处强转DTO为传入参数类型进行参数校验
         ${entity} entity = new ${entity}();
         BeanUtils.copyProperties(DTO, entity);
-
         return super.updateById(entity);
     }
     #end
@@ -127,7 +119,6 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public boolean removeById(Serializable id) {
-        // 删除=>如有必要, 在此处对id进行校验
         return super.removeById(id);
     }
     #end
@@ -149,10 +140,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
             public void invoke(U data, AnalysisContext context) {
                 cachedDataList.add(data);
             }
-
             @Override
             public void doAfterAllAnalysed(AnalysisContext context) {
-                //do nothing
+
             }
         };
         try {
@@ -165,10 +155,8 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         if (cachedDataList.isEmpty()) return false;
         List<${entity}> entityList = cachedDataList.stream()
             .map(e->{
-                // 导入Excel=>如有必要, 在此处对导入前对Excel解析后的参数进行校验赋值
                 ${entity} entity = new ${entity}();
                 BeanUtils.copyProperties(e, entity);
-
                 return entity;
             }).collect(Collectors.toList());
         return super.saveBatch(entityList);

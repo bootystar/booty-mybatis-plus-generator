@@ -2,11 +2,12 @@ package io.github.bootystar.mybatisplus.generator;
 
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
-import io.github.bootystar.mybatisplus.generator.config.child.DefaultConfig;
 import io.github.bootystar.mybatisplus.core.Result;
+import io.github.bootystar.mybatisplus.generator.config.child.DefaultConfig;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 
 /**
@@ -29,6 +30,7 @@ public class CrudGenerator {
 
     protected DefaultConfig.Builder customConfigBuilder = new DefaultConfig.Builder();
 
+    protected boolean mapperOnResource = false;
 
     public DataSourceConfig.Builder dataSourceConfigBuilder() {
         return dataSourceConfigBuilder;
@@ -62,6 +64,13 @@ public class CrudGenerator {
         init();
     }
 
+    public CrudGenerator(String url, String username, String password,boolean mapperOnResource) {
+        this.dataSourceConfigBuilder = new DataSourceConfig.Builder(url, username, password);
+        this.mapperOnResource = mapperOnResource;
+        init();
+    }
+
+
 
     protected void init() {
         String projectPath = System.getProperty("user.dir");
@@ -69,6 +78,9 @@ public class CrudGenerator {
         ;
         packageConfigBuilder.parent("io.github.bootystar")
         ;
+        if (mapperOnResource){
+            packageConfigBuilder.pathInfo(Collections.singletonMap(OutputFile.mapper, projectPath + "/src/main/resources/mapper"));
+        }
         strategyConfigBuilder.controllerBuilder().enableRestStyle()
         ;
         strategyConfigBuilder.mapperBuilder().mapperAnnotation(org.apache.ibatis.annotations.Mapper.class)

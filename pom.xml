@@ -34,9 +34,9 @@
     </licenses>
     <!-- 仓库信息 -->
     <scm>
-        <connection>scm:git@github.com:bootystar/common.git</connection>
-        <developerConnection>scm:git@github.com:bootystar/common.git</developerConnection>
-        <url>https://github.com/bootystar/common</url>
+        <connection>scm:git@github.com:bootystar/booty-mybatis-plus-generator.git</connection>
+        <developerConnection>scm:git@github.com:bootystar/booty-mybatis-plus-generator.git</developerConnection>
+        <url>https://github.com/bootystar/booty-mybatis-plus-generator</url>
     </scm>
     <!-- 开发人员信息 -->
     <developers>
@@ -56,19 +56,19 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.5.3</version>
+            <version>3.5.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.5.5</version>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
             <version>2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-extension</artifactId>
-            <version>3.5.3</version>
-            <scope>provided</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

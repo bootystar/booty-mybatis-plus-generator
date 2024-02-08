@@ -13,6 +13,7 @@ import java.util.Map;
  * @author booty
  */
 public interface CustomMapper<T,V>  extends BaseMapper<T> {
+
     List<V> listByMap(@Param("map") Map<String,Object> map, IPage<V> page);
 
 }

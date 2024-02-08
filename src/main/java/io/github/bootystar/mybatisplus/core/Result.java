@@ -6,6 +6,7 @@ package io.github.bootystar.mybatisplus.core;
  * @author booty
  */
 public class Result<T> {
+    public static final Integer UNAUTHORIZED = -1;
     public static final Integer SUCCESS = 1;
     public static final Integer FAILURE = 2;
     public static final Integer ERROR = 3;
@@ -26,6 +27,12 @@ public class Result<T> {
         Result<T> result = new Result<>();
         result.setCode(SUCCESS);
         result.setData(data);
+        return result;
+    }
+
+    public static <T> Result<T> success() {
+        Result<T> result = new Result<>();
+        result.setCode(SUCCESS);
         return result;
     }
 
@@ -58,6 +65,24 @@ public class Result<T> {
         result.setData(data);
         return result;
     }
+
+    public static <T> Result<T> unauthorized(String msg, T data) {
+        Result<T> result = new Result<>();
+        result.setCode(UNAUTHORIZED);
+        result.setMsg(msg);
+        result.setData(data);
+        return result;
+    }
+
+    public static <T> Result<T> unauthorized() {
+        Result<T> result = new Result<>();
+        result.setCode(UNAUTHORIZED);
+        result.setMsg("权限不足");
+        return result;
+    }
+
+
+
 
     public Integer getCode() {
         return code;
