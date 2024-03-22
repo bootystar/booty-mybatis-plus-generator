@@ -34,10 +34,9 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
         ConverterHelper.init();
     }
     @Override
-    public <S> V insertByDTO(S DTO) {
+    public <S> boolean insertByDTO(S DTO) {
         T entity = this.toEntity(DTO);
-        super.save(entity);
-        return this.toVO(entity);
+        return super.save(entity);
     }
 
     @Override

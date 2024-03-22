@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public interface CustomService<T,V> extends IService<T> {
 
-    <S> V insertByDTO(S DTO);
+    <S> boolean insertByDTO(S DTO);
 
     <S> boolean insertBatchByDTO(Collection<S> DTOList);
 

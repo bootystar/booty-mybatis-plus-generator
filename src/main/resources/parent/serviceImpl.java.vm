@@ -65,16 +65,16 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     #if(${generateInsert})
 
     @Override
-    public <S> ${entity}VO insertByDTO(S DTO) {
-##        ${entity} entity = this.toEntity(DTO);
-##        super.save(entity);
-##        return toVO(entity);
-        return super.insertByDTO(DTO);
+    public <S> boolean insertByDTO(S DTO) {
+        ${entity} entity = this.toEntity(DTO);
+        return super.save(entity);
     }
 ##
 ##    @Override
 ##    public <S> boolean insertBatchByDTO(Collection<S> DTOList) {
+##        // 批量新增=>如有必要 在此处强转DTO为传入参数类型进行参数校验
 ##        List<${entity}> entityList = DTOList.stream().map(this::toEntity).collect(Collectors.toList());
+##
 ##        return super.saveBatch(entityList);
 ##    }
     #end
