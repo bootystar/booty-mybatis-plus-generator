@@ -6,7 +6,9 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.exception.ExcelAnalysisException;
 import com.alibaba.excel.exception.ExcelDataConvertException;
 import com.alibaba.excel.read.listener.ReadListener;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.bootystar.mybatisplus.excel.ConverterHelper;
@@ -34,9 +36,10 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
         ConverterHelper.init();
     }
     @Override
-    public <S> boolean insertByDTO(S DTO) {
+    public <S> V insertByDTO(S DTO) {
         T entity = this.toEntity(DTO);
-        return super.save(entity);
+        super.save(entity);
+        return toVO(entity);
     }
 
     @Override
@@ -156,7 +159,7 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
     public <S,U> void exportExcel(S DTO, OutputStream os, Class<U> clazz, Collection<String> includeFields) {
         List<U> voList = listByDTO(DTO,clazz);
         EasyExcel.write(os, clazz).includeColumnFieldNames(includeFields)
-//                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
 //                .registerConverter(new LocalDateTimeStringConverter())
 //                .registerConverter(new DateStringConverter())
 //                .registerConverter(new LongStringConverter())
@@ -292,5 +295,10 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
             return true;
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        CustomServiceImpl<CustomMapper<Object, Object>, Object, Object> service = new CustomServiceImpl<CustomMapper<Object, Object>, Object, Object>(){};
+        LambdaQueryChainWrapper<Object> objectLambdaQueryChainWrapper = service.lambdaQuery();
     }
 }

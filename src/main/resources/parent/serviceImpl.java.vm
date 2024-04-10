@@ -66,13 +66,13 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public <S> boolean insertByDTO(S DTO) {
-        ${entity} entity = this.toEntity(DTO);
-        return super.save(entity);
+##        ${entity} entity = this.toEntity(DTO);
+##        return super.save(entity);
+        return super.insertByDTO(DTO);
     }
 ##
 ##    @Override
 ##    public <S> boolean insertBatchByDTO(Collection<S> DTOList) {
-##        // 批量新增=>如有必要 在此处强转DTO为传入参数类型进行参数校验
 ##        List<${entity}> entityList = DTOList.stream().map(this::toEntity).collect(Collectors.toList());
 ##
 ##        return super.saveBatch(entityList);
@@ -82,9 +82,6 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public <S> boolean updateByDTO(S DTO) {
-##        // 修改=>如有必要, 在此处强转DTO为传入参数类型进行参数校验
-##        ${entity} entity = this.toEntity(DTO);
-##
         return super.updateByDTO(DTO);
     }
     #end

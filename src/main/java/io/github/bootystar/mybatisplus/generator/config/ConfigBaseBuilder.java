@@ -1,8 +1,16 @@
 package io.github.bootystar.mybatisplus.generator.config;
 
 import com.baomidou.mybatisplus.generator.config.IConfigBuilder;
-import com.baomidou.mybatisplus.generator.util.ClassUtils;
+import io.github.bootystar.mybatisplus.interfaces.MethodReference;
+import io.github.bootystar.mybatisplus.core.Result;
+import io.github.bootystar.mybatisplus.generator.config.child.DefaultConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.TypeVariable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +20,8 @@ import java.util.Map;
  * @author booty
  */
 public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements IConfigBuilder<T> {
+
+    private static final Logger log = LoggerFactory.getLogger(ConfigBaseBuilder.class);
 
     protected T config;
     protected U builder;
@@ -81,11 +91,13 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
     /**
      * 返回结果类
      *
+     * @deprecated 请使用{@link io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder#returnStaticMethod(FuncMethod)}代替。
      * @param returnResultClass 返回结果类
      * @return {@code Builder }
      * @author booty
      *
      */
+    @Deprecated
     public U returnResultClass(Class<?> returnResultClass) {
         if (returnResultClass == null) {
             this.config.returnResultClass = null;
@@ -93,20 +105,21 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
             this.config.returnResultGenericType = false;
             return this.builder;
         }
-        String fullClassName = returnResultClass.getName();
-        this.config.returnResultClassPackage = fullClassName;
-        this.config.returnResultClass = ClassUtils.getSimpleName(fullClassName);
+        this.config.returnResultClassPackage = returnResultClass.getPackage().getName();
+        this.config.returnResultClass = returnResultClass.getSimpleName();
         return this.builder;
     }
 
     /**
      * 返回结果类
      *
+     * @deprecated 请使用{@link io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder#returnStaticMethod(FuncMethod)}代替。
      * @param fullClassName 返回结果类
      * @return {@code Builder }
      * @author booty
      *
      */
+    @Deprecated
     public U returnResultClass(String fullClassName) {
         if (fullClassName == null) {
             this.config.returnResultClass = null;
@@ -114,8 +127,12 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
             this.config.returnResultGenericType = false;
             return this.builder;
         }
-        this.config.returnResultClassPackage = fullClassName;
-        this.config.returnResultClass = ClassUtils.getSimpleName(fullClassName);
+        try {
+            Class<?> aClass = Class.forName(fullClassName);
+            return returnResultClass(aClass);
+        }catch (Exception e){
+            log.warn("return class not exist !!! use default instead");
+        }
         return this.builder;
     }
 
@@ -123,11 +140,13 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
     /**
      * 返回结果是否为泛型类型
      *
+     * @deprecated 请使用{@link io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder#returnStaticMethod(FuncMethod)}代替。
      * @param isGenericType 是泛型类型
      * @return {@code Builder }
      * @author booty
      *
      */
+    @Deprecated
     public U returnResultGenericType(boolean isGenericType) {
         this.config.returnResultGenericType = isGenericType;
         return this.builder;
@@ -136,11 +155,13 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
     /**
      * 返回结果静态方法名字
      *
+     * @deprecated 请使用{@link io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder#returnStaticMethod(FuncMethod)}代替。
      * @param name 名字
      * @return {@code Builder }
      * @author booty
      *
      */
+    @Deprecated
     public U returnResultDefaultStaticMethodName(String name) {
         this.config.returnResultDefaultStaticMethodName = name;
         return this.builder;
@@ -441,6 +462,48 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
     public U fieldAnnotationOnVO(boolean b) {
         this.config.fieldAnnotationOnVO = b;
         return this.builder;
+    }
+
+
+    /**
+     * 指定controller返回的实体类以及静态方法
+     * 若未指定方法不为静态或未使用方法引用，可能会导致生成错误代码
+     *
+     * @param methodReference 方法引用
+     * @return {@link U }
+     * @author booty
+     */
+    public <Re,Obj> U returnStaticMethod(MethodReference<Re, Obj> methodReference){
+        try {
+            Method accept = methodReference.getClass().getDeclaredMethod("writeReplace");
+            accept.setAccessible(Boolean.TRUE);
+            SerializedLambda serializedLambda  = (SerializedLambda) accept.invoke(methodReference);
+            String methodName = serializedLambda.getImplMethodName();
+            String fullClassName = serializedLambda.getImplClass().replace("/", ".");
+            Class<?> clazz = Class.forName(fullClassName);
+            Method returnMethod = clazz.getDeclaredMethod(methodName);
+            int modifiers = returnMethod.getModifiers();
+            this.returnResultClass(clazz);
+            if (!Modifier.isStatic(modifiers)){
+                log.warn("return method not a static method !!! may produce error code");
+            }
+            TypeVariable<? extends Class<?>>[] typeParameters = clazz.getTypeParameters();
+            if (typeParameters.length == 0){
+                log.warn("not a ParameterizedType return class ! use default return instead");
+            }else{
+                this.returnResultGenericType(true);
+            }
+            this.returnResultClass(clazz);
+            this.returnResultDefaultStaticMethodName(methodName);
+        }catch (Exception e){
+
+        }
+        return this.builder;
+    }
+
+    public static void main(String[] args) {
+        DefaultConfig.Builder builder1 = new DefaultConfig.Builder();
+        builder1.returnStaticMethod(Result::success);
     }
 
 }
