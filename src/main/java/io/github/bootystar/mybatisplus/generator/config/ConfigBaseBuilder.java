@@ -2,8 +2,6 @@ package io.github.bootystar.mybatisplus.generator.config;
 
 import com.baomidou.mybatisplus.generator.config.IConfigBuilder;
 import io.github.bootystar.mybatisplus.interfaces.MethodReference;
-import io.github.bootystar.mybatisplus.core.Result;
-import io.github.bootystar.mybatisplus.generator.config.child.DefaultConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -466,14 +464,14 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
 
 
     /**
-     * 指定controller返回的实体类以及静态方法
-     * 若未指定方法不为静态或未使用方法引用，可能会导致生成错误代码
+     * 指定controller返回的实体类以及静态方法或构造器
+     * 若未指定方法不为静态或构造器,会使用默认返回值替代
      *
      * @param methodReference 方法引用
      * @return {@link U }
      * @author booty
      */
-    public <Re,Obj> U returnStaticMethod(MethodReference<Re, Obj> methodReference){
+    public <Re,Obj> U returnMethod(MethodReference<Re, Obj> methodReference){
         try {
             Method accept = methodReference.getClass().getDeclaredMethod("writeReplace");
             accept.setAccessible(Boolean.TRUE);
@@ -481,30 +479,31 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
             String methodName = serializedLambda.getImplMethodName();
             String fullClassName = serializedLambda.getImplClass().replace("/", ".");
             Class<?> clazz = Class.forName(fullClassName);
-            Method returnMethod = clazz.getDeclaredMethod(methodName);
-            int modifiers = returnMethod.getModifiers();
-            this.returnResultClass(clazz);
-            if (!Modifier.isStatic(modifiers)){
-                log.warn("return method not a static method !!! may produce error code");
-            }
-            TypeVariable<? extends Class<?>>[] typeParameters = clazz.getTypeParameters();
-            if (typeParameters.length == 0){
-                log.warn("not a ParameterizedType return class ! use default return instead");
-            }else{
-                this.returnResultGenericType(true);
+            try {
+                Method returnMethod = clazz.getDeclaredMethod(methodName);
+                int modifiers = returnMethod.getModifiers();
+                this.returnResultClass(clazz);
+                if (!Modifier.isStatic(modifiers)){
+                    log.warn("return method not a static method !!! may produce error code");
+                }
+                TypeVariable<? extends Class<?>>[] typeParameters = clazz.getTypeParameters();
+                if (typeParameters.length == 0){
+                    log.warn("not a ParameterizedType return class ! use default return instead");
+                }else{
+                    this.returnResultGenericType(true);
+                }
+            }catch (NoSuchMethodException e){
+                clazz.getConstructor(Object.class);
+                methodName="new "+clazz.getSimpleName();
             }
             this.returnResultClass(clazz);
             this.returnResultDefaultStaticMethodName(methodName);
-        }catch (Exception e){
-
+        } catch (Exception e){
+            log.warn("can't resolve return method , use default return instead");
         }
         return this.builder;
     }
 
-    public static void main(String[] args) {
-        DefaultConfig.Builder builder1 = new DefaultConfig.Builder();
-        builder1.returnStaticMethod(Result::success);
-    }
 
 }
 
