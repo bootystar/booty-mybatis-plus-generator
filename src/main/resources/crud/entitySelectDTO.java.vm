@@ -139,8 +139,8 @@ public class ${entity}SelectDTO {
      */
     #end
     private ${field.propertyType} ${field.propertyName}End;
-## int类型长度小于3时追加in查询
-#elseif(${field.propertyType} == "Integer")
+## 追加in查询
+#elseif(${field.propertyType} == "Integer" || ${field.propertyType} == "Long")
 
     #if(${springdoc})
     @Schema(description = "${field.comment}批量查询")
@@ -270,8 +270,8 @@ public class ${entity}SelectDTO {
     #end
     }
 
-    #elseif(${field.propertyType} == "Integer")
-##  int批量查询getter and setter
+    #elseif(${field.propertyType} == "Integer" || ${field.propertyType} == "Long")
+##  in批量查询getter and setter
     public List<${field.propertyType}> ${getprefix}${field.capitalName}List() {
         return ${field.propertyName}List;
     }

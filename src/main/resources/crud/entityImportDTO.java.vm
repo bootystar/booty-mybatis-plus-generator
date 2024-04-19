@@ -79,7 +79,7 @@ public class ${entity}ImportDTO {
     }
 
   #if(${chainModel})
-    public ${entity}ImportVo set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+    public ${entity}ImportDTO set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
   #else
     public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
   #end

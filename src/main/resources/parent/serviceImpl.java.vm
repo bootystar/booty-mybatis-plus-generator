@@ -65,7 +65,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     #if(${generateInsert})
 
     @Override
-    public <S> boolean insertByDTO(S DTO) {
+    public <S> ${entity}VO insertByDTO(S DTO) {
 ##        ${entity} entity = this.toEntity(DTO);
 ##        return super.save(entity);
         return super.insertByDTO(DTO);

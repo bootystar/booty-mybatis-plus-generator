@@ -1,7 +1,7 @@
 package io.github.bootystar.mybatisplus.generator.config;
 
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.generator.config.IConfigBuilder;
-import io.github.bootystar.mybatisplus.interfaces.MethodReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -471,7 +471,7 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
      * @return {@link U }
      * @author booty
      */
-    public <Re,Obj> U returnMethod(MethodReference<Re, Obj> methodReference){
+    public <Re,Obj> U returnMethod(SFunction<Re, Obj> methodReference){
         try {
             Method accept = methodReference.getClass().getDeclaredMethod("writeReplace");
             accept.setAccessible(Boolean.TRUE);

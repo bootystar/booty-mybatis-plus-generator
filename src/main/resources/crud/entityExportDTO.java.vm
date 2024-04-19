@@ -84,9 +84,9 @@ public class ${entity}ExportDTO {
     }
 
   #if(${chainModel})
-    public ${entity}ExportVO set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+    public ${entity}ExportDTO set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
   #else
-    public VOid set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+    public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
   #end
         this.${field.propertyName} = ${field.propertyName};
   #if(${chainModel})

@@ -117,7 +117,7 @@ public class ${entity}UpdateDTO {
     }
 
   #if(${chainModel})
-    public ${entity} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+    public ${entity}UpdateDTO set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
   #else
     public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
   #end
