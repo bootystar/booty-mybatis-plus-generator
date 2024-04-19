@@ -13,7 +13,7 @@ import org.springframework.validation.annotation.Validated;
 #end
 import ${package.Service}.${table.serviceName};
 #if(${returnResultClass})
-import ${returnResultClassPackage};
+import ${returnResultClassPackage}.${returnResultClass};
 #end
 #if(${springdoc})
 import io.swagger.v3.oas.annotations.tags.Tag;

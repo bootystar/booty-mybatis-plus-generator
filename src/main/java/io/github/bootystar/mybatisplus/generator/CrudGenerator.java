@@ -94,9 +94,10 @@ public class CrudGenerator {
         templateConfigBuilder.mapper("/crud/mapper.java");
         templateConfigBuilder.xml("/crud/mapper.xml");
         templateConfigBuilder.entity("/crud/entity.java");
-        customConfigBuilder.returnResultClass(Result.class);
-        customConfigBuilder.returnResultGenericType(true);
-        customConfigBuilder.returnResultDefaultStaticMethodName("success");
+//        customConfigBuilder.returnResultClass(Result.class);
+//        customConfigBuilder.returnResultGenericType(true);
+//        customConfigBuilder.returnResultDefaultStaticMethodName("success");
+        customConfigBuilder.returnMethod(Result::success);
         customConfigBuilder.insertExcludeFields(Arrays.asList("createTime","updateTime"));
         customConfigBuilder.updateExcludeFields(Arrays.asList("createTime","updateTime"));
         customConfigBuilder.orderColumn("create_time",true);

@@ -145,31 +145,18 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
     @Override
     public <S,U> void exportExcel(S DTO, OutputStream os, Class<U> clazz) {
         List<U> voList = listByDTO(DTO,clazz);
-        EasyExcel.write(os, clazz)
-//                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
-//                .registerConverter(new LocalDateTimeStringConverter())
-//                .registerConverter(new LocalDateStringConverter())
-//                .registerConverter(new DateStringConverter())
-//                .registerConverter(new LongStringConverter())
-//                .registerConverter(new DoubleStringConverter())
-                .sheet().doWrite(voList);
+        EasyExcel.write(os, clazz).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet().doWrite(voList);
     }
 
     @Override
     public <S,U> void exportExcel(S DTO, OutputStream os, Class<U> clazz, Collection<String> includeFields) {
         List<U> voList = listByDTO(DTO,clazz);
-        EasyExcel.write(os, clazz).includeColumnFieldNames(includeFields)
-                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
-//                .registerConverter(new LocalDateTimeStringConverter())
-//                .registerConverter(new DateStringConverter())
-//                .registerConverter(new LongStringConverter())
-//                .registerConverter(new DoubleStringConverter())
-                .sheet().doWrite(voList);
+        EasyExcel.write(os, clazz).includeColumnFieldNames(includeFields).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet().doWrite(voList);
     }
 
     @Override
     public <U> void exportTemplate(OutputStream os, Class<U> clazz) {
-        EasyExcel.write(os, clazz).sheet().doWrite(Collections.emptyList());
+        EasyExcel.write(os, clazz).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet().doWrite(Collections.emptyList());
     }
 
     @Override
@@ -181,8 +168,7 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
     }
 
     protected <U> List<T> processImportData(List<U> cachedDataList) {
-        List<T> entityList = cachedDataList.stream().map(this::toEntity).collect(Collectors.toList());
-        return entityList;
+        return cachedDataList.stream().map(this::toEntity).collect(Collectors.toList());
     }
 
     protected <U> List<U> processImportData(InputStream is, Class<U> clazz) {
@@ -295,10 +281,5 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
             return true;
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-        CustomServiceImpl<CustomMapper<Object, Object>, Object, Object> service = new CustomServiceImpl<CustomMapper<Object, Object>, Object, Object>(){};
-        LambdaQueryChainWrapper<Object> objectLambdaQueryChainWrapper = service.lambdaQuery();
     }
 }

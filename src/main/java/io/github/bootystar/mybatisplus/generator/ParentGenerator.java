@@ -97,9 +97,10 @@ public class ParentGenerator  {
         templateConfigBuilder.mapper("/parent/mapper.java");
         templateConfigBuilder.xml("/parent/mapper.xml");
         templateConfigBuilder.entity("/parent/entity.java");
-        customConfigBuilder.returnResultClass(Result.class);
-        customConfigBuilder.returnResultGenericType(true);
-        customConfigBuilder.returnResultDefaultStaticMethodName("success");
+//        customConfigBuilder.returnResultClass(Result.class);
+//        customConfigBuilder.returnResultGenericType(true);
+//        customConfigBuilder.returnResultDefaultStaticMethodName("success");
+        customConfigBuilder.returnMethod(Result::success);
         customConfigBuilder.insertExcludeFields(Arrays.asList("createTime","updateTime"));
         customConfigBuilder.updateExcludeFields(Arrays.asList("createTime","updateTime"));
         customConfigBuilder.orderColumn("create_time",true);
