@@ -63,8 +63,8 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     }
 
     @Override
-    public ${entity}VO oneByDTO(${entity}SelectDTO DTO) {
-        List<${entity}VO> vs = listByDTO(DTO);
+    public ${entity}VO oneByDTO(${entity}SelectDTO s) {
+        List<${entity}VO> vs = listByDTO(s);
         if (vs == null || vs.size()==0 ) {
             return null;
         }
@@ -75,14 +75,14 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     }
 
     @Override
-    public List<${entity}VO> listByDTO(${entity}SelectDTO DTO){
-        List<${entity}VO> voList = this.baseMapper.listByMap(DTO, null);
+    public List<${entity}VO> listByDTO(${entity}SelectDTO s){
+        List<${entity}VO> voList = this.baseMapper.listByMap(s, null);
         voPostProcess(voList);
         return voList;
     }
 
     @Override
-    public IPage<${entity}VO> pageByDTO(${entity}SelectDTO DTO, Long current, Long size){
+    public IPage<${entity}VO> pageByDTO(${entity}SelectDTO s, Long current, Long size){
         if (current == null || current<1) {
             current=1L;
         }
@@ -90,7 +90,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
             size=10L;
         }
         Page<${entity}VO> page = new Page<>(current, size);
-        List<${entity}VO> voList = this.baseMapper.listByMap(DTO, page);
+        List<${entity}VO> voList = this.baseMapper.listByMap(s, page);
         voPostProcess(voList);
         page.setRecords(voList);
         return page;
@@ -99,9 +99,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     #if(${generateInsert})
 
     @Override
-    public ${entity}VO insertByDTO(${entity}InsertDTO DTO) {
+    public ${entity}VO insertByDTO(${entity}InsertDTO s) {
         ${entity} entity = new ${entity}();
-        BeanUtils.copyProperties(DTO, entity);
+        BeanUtils.copyProperties(s, entity);
         super.save(entity);
         ${entity}VO vo = new ${entity}VO();
         BeanUtils.copyProperties(entity, vo);
@@ -111,9 +111,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     #if(${generateUpdate})
 
     @Override
-    public boolean updateByDTO(${entity}UpdateDTO DTO) {
+    public boolean updateByDTO(${entity}UpdateDTO s) {
         ${entity} entity = new ${entity}();
-        BeanUtils.copyProperties(DTO, entity);
+        BeanUtils.copyProperties(s, entity);
         return super.updateById(entity);
     }
     #end
@@ -127,8 +127,8 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     #if(${generateExport})
 
     @Override
-    public <U> void exportExcel(${entity}SelectDTO DTO, OutputStream os, Class<U> clazz) {
-        List<${entity}VO> voList = listByDTO(DTO);
+    public <U> void exportExcel(${entity}SelectDTO s, OutputStream os, Class<U> clazz) {
+        List<${entity}VO> voList = listByDTO(s);
         EasyExcel.write(os, clazz).sheet().doWrite(voList);
     }
     #end

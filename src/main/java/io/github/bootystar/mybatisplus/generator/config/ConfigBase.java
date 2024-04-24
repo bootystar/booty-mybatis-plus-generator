@@ -80,7 +80,7 @@ public abstract class ConfigBase implements IConfig {
         if (orderColumnMap != null && orderColumnMap.size() > 0) {
             orderColumnMap.entrySet().stream()
                     .filter(e -> existColumnNames.contains(e.getKey()))
-                    .map(e -> String.format("a.%s%s", e.getKey(), e.getValue() ? " desc" : ""))
+                    .map(e -> String.format("a.`%s`%s", e.getKey(), e.getValue() ? " desc" : ""))
                     .reduce((e1, e2) -> e1 + "," + e2)
                     .ifPresent(e -> data.put("orderBySql", e))
             ;

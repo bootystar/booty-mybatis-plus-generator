@@ -8,7 +8,6 @@ import com.alibaba.excel.exception.ExcelDataConvertException;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.bootystar.mybatisplus.excel.ConverterHelper;
@@ -36,21 +35,21 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
         ConverterHelper.init();
     }
     @Override
-    public <S> V insertByDTO(S DTO) {
-        T entity = this.toEntity(DTO);
+    public <S> V insertByDTO(S s) {
+        T entity = this.toEntity(s);
         super.save(entity);
         return toVO(entity);
     }
 
     @Override
-    public <S> boolean insertBatchByDTO(Collection<S> DTOList) {
-        List<T> entityList = DTOList.stream().map(this::toEntity).collect(Collectors.toList());
+    public <S> boolean insertBatchByDTO(Collection<S> sCollection) {
+        List<T> entityList = sCollection.stream().map(this::toEntity).collect(Collectors.toList());
         return super.saveBatch(entityList);
     }
 
     @Override
-    public <S> boolean updateByDTO(S DTO) {
-        T entity = this.toEntity(DTO);
+    public <S> boolean updateByDTO(S s) {
+        T entity = this.toEntity(s);
         return super.updateById(entity);
     }
 
@@ -75,8 +74,8 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
     }
 
     @Override
-    public <S> V oneByDTO(S DTO) {
-        List<V> vs = listByDTO(DTO);
+    public <S> V oneByDTO(S s) {
+        List<V> vs = listByDTO(s);
         if (vs == null || vs.size()==0 ) {
             return null;
         }
@@ -87,8 +86,8 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
     }
 
     @Override
-    public <S, U> U oneByDTO(S DTO, Class<U> clazz) {
-        List<U> vs = listByDTO(DTO,clazz);
+    public <S, U> U oneByDTO(S s, Class<U> clazz) {
+        List<U> vs = listByDTO(s,clazz);
         if (vs == null || vs.size()==0 ) {
             return null;
         }
@@ -99,19 +98,19 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
     }
 
     @Override
-    public <S> List<V> listByDTO(S DTO) {
-        List<V> voList = this.baseMapper.listByMap(this.toMap(DTO), null);
+    public <S> List<V> listByDTO(S s) {
+        List<V> voList = this.baseMapper.listByMap(this.toMap(s), null);
         this.voPostProcess(voList);
         return voList;
     }
 
     @Override
-    public <S,U> List<U> listByDTO(S DTO, Class<U> clazz) {
-        return this.listByDTO(DTO).stream().map(e->this.toTarget(e, clazz)).collect(Collectors.toList());
+    public <S,U> List<U> listByDTO(S s, Class<U> clazz) {
+        return this.listByDTO(s).stream().map(e->this.toTarget(e, clazz)).collect(Collectors.toList());
     }
 
     @Override
-    public <S> IPage<V> pageByDTO(S DTO, Long current, Long size) {
+    public <S> IPage<V> pageByDTO(S s, Long current, Long size) {
         if (current == null || current<1) {
             current=1L;
         }
@@ -119,15 +118,15 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
             size=10L;
         }
         Page<V> page = new Page<>(current, size);
-        List<V> voList = this.baseMapper.listByMap(this.toMap(DTO), page);
+        List<V> voList = this.baseMapper.listByMap(this.toMap(s), page);
         this.voPostProcess(voList);
         page.setRecords(voList);
         return page;
     }
 
     @Override
-    public <S,U> IPage<U> pageByDTO(S DTO, Long current, Long size, Class<U> clazz) {
-        IPage<V> viPage = this.pageByDTO(DTO, current, size);
+    public <S,U> IPage<U> pageByDTO(S s, Long current, Long size, Class<U> clazz) {
+        IPage<V> viPage = this.pageByDTO(s, current, size);
         List<U> voList = viPage.getRecords().stream().map(e->this.toTarget(e,clazz)).collect(Collectors.toList());
         Page<U> uPage = new Page<>();
         uPage.setCurrent(viPage.getCurrent());
@@ -143,14 +142,14 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
     }
 
     @Override
-    public <S,U> void exportExcel(S DTO, OutputStream os, Class<U> clazz) {
-        List<U> voList = listByDTO(DTO,clazz);
+    public <S,U> void exportExcel(S s, OutputStream os, Class<U> clazz) {
+        List<U> voList = listByDTO(s,clazz);
         EasyExcel.write(os, clazz).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet().doWrite(voList);
     }
 
     @Override
-    public <S,U> void exportExcel(S DTO, OutputStream os, Class<U> clazz, Collection<String> includeFields) {
-        List<U> voList = listByDTO(DTO,clazz);
+    public <S,U> void exportExcel(S s, OutputStream os, Class<U> clazz, Collection<String> includeFields) {
+        List<U> voList = listByDTO(s,clazz);
         EasyExcel.write(os, clazz).includeColumnFieldNames(includeFields).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet().doWrite(voList);
     }
 

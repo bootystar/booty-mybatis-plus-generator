@@ -18,31 +18,31 @@ import java.util.Map;
  */
 public interface CustomService<T,V> extends IService<T> {
 
-    <S> V insertByDTO(S DTO);
+    <S> V insertByDTO(S s);
 
-    <S> boolean insertBatchByDTO(Collection<S> DTOList);
+    <S> boolean insertBatchByDTO(Collection<S> sCollection);
 
-    <S> boolean updateByDTO(S DTO);
+    <S> boolean updateByDTO(S s);
 
     V voById(Serializable id);
 
     <U> U voById(Serializable id, Class<U> clazz);
 
-    <S> V oneByDTO(S DTO);
+    <S> V oneByDTO(S s);
 
-    <S,U> U oneByDTO(S DTO, Class<U> clazz);
+    <S,U> U oneByDTO(S s, Class<U> clazz);
 
-    <S> List<V> listByDTO(S DTO);
+    <S> List<V> listByDTO(S s);
 
-    <S,U> List<U> listByDTO(S DTO, Class<U> clazz);
+    <S,U> List<U> listByDTO(S s, Class<U> clazz);
 
-    <S> IPage<V> pageByDTO(S DTO, Long current, Long size);
+    <S> IPage<V> pageByDTO(S s, Long current, Long size);
 
-    <S,U> IPage<U> pageByDTO(S DTO, Long current, Long size, Class<U> clazz);
+    <S,U> IPage<U> pageByDTO(S s, Long current, Long size, Class<U> clazz);
 
-    <S,U> void exportExcel(S DTO, OutputStream os, Class<U> clazz);
+    <S,U> void exportExcel(S s, OutputStream os, Class<U> clazz);
 
-    <S,U> void exportExcel(S DTO, OutputStream os, Class<U> clazz, Collection<String> includeFields);
+    <S,U> void exportExcel(S s, OutputStream os, Class<U> clazz, Collection<String> includeFields);
 
     <U> void exportTemplate(OutputStream os, Class<U> clazz);
 

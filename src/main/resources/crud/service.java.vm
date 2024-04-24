@@ -36,23 +36,23 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
     #if(${generateInsert})
 
-    ${entity}VO insertByDTO(${entity}InsertDTO DTO);
+    ${entity}VO insertByDTO(${entity}InsertDTO s);
     #end
     #if(${generateUpdate})
 
-    boolean updateByDTO(${entity}UpdateDTO DTO);
+    boolean updateByDTO(${entity}UpdateDTO s);
     #end
     #if(${generateSelect})
 
     ${entity}VO voById(Serializable id);
 
-    ${entity}VO oneByDTO(${entity}SelectDTO DTO);
+    ${entity}VO oneByDTO(${entity}SelectDTO s);
 
-    List<${entity}VO> listByDTO(${entity}SelectDTO DTO);
+    List<${entity}VO> listByDTO(${entity}SelectDTO s);
 
-    IPage<${entity}VO> pageByDTO(${entity}SelectDTO DTO, Long current, Long size);
+    IPage<${entity}VO> pageByDTO(${entity}SelectDTO s, Long current, Long size);
 
-    <U> void exportExcel(${entity}SelectDTO DTO, OutputStream os, Class<U> clazz);
+    <U> void exportExcel(${entity}SelectDTO s, OutputStream os, Class<U> clazz);
     #end
     #if(${generateImport})
 

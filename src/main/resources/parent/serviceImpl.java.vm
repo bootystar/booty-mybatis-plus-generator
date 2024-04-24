@@ -50,25 +50,25 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     }
 
     @Override
-    public <S> List<${entity}VO> listByDTO(S DTO){
+    public <S> List<${entity}VO> listByDTO(S s){
 ##        List<${entity}VO> voList = baseMapper.listByMap(toMap(DTO), null);
 ##        this.voPostProcess(voList);
 ##        return voList;
-        return super.listByDTO(DTO);
+        return super.listByDTO(s);
     }
 
     @Override
-    public <S> IPage<${entity}VO> pageByDTO(S DTO, Long current, Long size){
-        return super.pageByDTO(DTO,current,size);
+    public <S> IPage<${entity}VO> pageByDTO(S s, Long current, Long size){
+        return super.pageByDTO(s,current,size);
     }
     #end
     #if(${generateInsert})
 
     @Override
-    public <S> ${entity}VO insertByDTO(S DTO) {
+    public <S> ${entity}VO insertByDTO(S s) {
 ##        ${entity} entity = this.toEntity(DTO);
 ##        return super.save(entity);
-        return super.insertByDTO(DTO);
+        return super.insertByDTO(s);
     }
 ##
 ##    @Override
@@ -81,8 +81,8 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     #if(${generateUpdate})
 
     @Override
-    public <S> boolean updateByDTO(S DTO) {
-        return super.updateByDTO(DTO);
+    public <S> boolean updateByDTO(S s) {
+        return super.updateByDTO(s);
     }
     #end
     #if(${generateDelete})
