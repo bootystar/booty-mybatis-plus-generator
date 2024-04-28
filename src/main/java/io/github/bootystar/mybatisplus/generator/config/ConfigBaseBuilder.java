@@ -489,13 +489,12 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
                 TypeVariable<? extends Class<?>>[] typeParameters = clazz.getTypeParameters();
                 if (typeParameters.length == 0){
                     log.warn("not a ParameterizedType return class ! use default return instead");
-                }else{
-                    this.returnResultGenericType(true);
                 }
             }catch (NoSuchMethodException e){
                 clazz.getConstructor(Object.class);
                 methodName="new "+clazz.getSimpleName();
             }
+            this.returnResultGenericType(true);
             this.returnResultClass(clazz);
             this.returnResultDefaultStaticMethodName(methodName);
         } catch (Exception e){
