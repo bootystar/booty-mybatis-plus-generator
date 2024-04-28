@@ -73,7 +73,7 @@
         <if test="map!=null">
 #foreach($field in ${table.fields})
     #if(${field.logicDeleteField})
-#                 and a.${field.columnName} = 0
+##                 and a.${field.columnName} = 0
     #elseif(${field.keyFlag})
             <if test="map.primaryKey!=null">
                 and a.`${field.columnName}` = ${shift3}${shiftLeft}map.primaryKey${shiftRight}
