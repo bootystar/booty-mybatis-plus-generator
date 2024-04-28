@@ -2,20 +2,20 @@ package io.github.bootystar.mybatisplus.generator;
 
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import io.github.bootystar.mybatisplus.generator.config.IConfig;
 import io.github.bootystar.mybatisplus.generator.engine.EnhanceVelocityTemplateEngine;
-
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.File;
-import java.util.List;
 
 
 /**
  * 自定义配置代码生成器
  * @author booty
  */
+@Getter
 public class CustomGenerator {
     private static final Logger log = LoggerFactory.getLogger(CustomGenerator.class);
 
@@ -185,49 +185,4 @@ public class CustomGenerator {
         System.out.println(new File(path).getAbsolutePath());
     }
 
-
-
-
-
-    /**
-     * 开放表信息、预留子类重写
-     *
-     * @param config 配置信息
-     * @return ignore
-     */
-    protected List<TableInfo> getAllTableInfoList(ConfigBuilder config) {
-        return config.getTableInfoList();
-    }
-
-    public ConfigBuilder getConfig() {
-        return config;
-    }
-
-    public InjectionConfig getInjectionConfig() {
-        return injection;
-    }
-
-    public DataSourceConfig getDataSource() {
-        return dataSource;
-    }
-
-    public StrategyConfig getStrategy() {
-        return strategy;
-    }
-
-    public PackageConfig getPackageInfo() {
-        return packageInfo;
-    }
-
-    public TemplateConfig getTemplate() {
-        return template;
-    }
-
-    public GlobalConfig getGlobalConfig() {
-        return globalConfig;
-    }
-
-    public IConfig getCustom() {
-        return custom;
-    }
 }

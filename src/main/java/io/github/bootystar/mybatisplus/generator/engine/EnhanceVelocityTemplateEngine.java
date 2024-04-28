@@ -27,9 +27,6 @@ public class EnhanceVelocityTemplateEngine extends VelocityTemplateEngine {
     public EnhanceVelocityTemplateEngine() {
     }
 
-    public IConfig getCustomConfig() {
-        return customConfig;
-    }
 
     public EnhanceVelocityTemplateEngine(IConfig customConfig) {
         this.customConfig = customConfig;

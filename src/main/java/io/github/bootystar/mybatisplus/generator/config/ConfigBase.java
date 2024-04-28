@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import lombok.Data;
+import lombok.Setter;
 import org.apache.ibatis.type.JdbcType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,7 @@ public abstract class ConfigBase implements IConfig {
     /**
      * 自定义文件
      */
+    @Setter
     protected List<CustomFile> customFiles;
 
     @Override
@@ -106,12 +108,6 @@ public abstract class ConfigBase implements IConfig {
         return false;
     }
 
-
-
-
-    public void setCustomFiles(List<CustomFile> customFiles) {
-        this.customFiles = customFiles;
-    }
 
     @Override
     public List<CustomFile> getCustomFiles() {

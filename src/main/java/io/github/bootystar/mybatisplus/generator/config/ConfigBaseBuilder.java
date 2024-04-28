@@ -2,8 +2,7 @@ package io.github.bootystar.mybatisplus.generator.config;
 
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.generator.config.IConfigBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
@@ -17,9 +16,8 @@ import java.util.Map;
  * 配置构建器基类
  * @author booty
  */
+@Slf4j
 public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements IConfigBuilder<T> {
-
-    private static final Logger log = LoggerFactory.getLogger(ConfigBaseBuilder.class);
 
     protected T config;
     protected U builder;

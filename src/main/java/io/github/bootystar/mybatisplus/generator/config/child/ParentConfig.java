@@ -2,11 +2,13 @@ package io.github.bootystar.mybatisplus.generator.config.child;
 
 import io.github.bootystar.mybatisplus.generator.config.ConfigBase;
 import io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder;
+import lombok.Getter;
 
 /**
  * 父类生成器配置类
  * @author booty
  */
+@Getter
 public class ParentConfig extends ConfigBase {
 
     /**
@@ -18,14 +20,6 @@ public class ParentConfig extends ConfigBase {
      * 显示mapper方法
      */
     protected boolean showMapperMethod = true;
-
-    public boolean isShowServiceImplMethod() {
-        return showServiceImplMethod;
-    }
-
-    public boolean isShowMapperMethod() {
-        return showMapperMethod;
-    }
 
     /**
      * 构造器

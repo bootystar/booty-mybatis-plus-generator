@@ -10,9 +10,7 @@ import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.github.bootystar.mybatisplus.excel.ConverterHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
 import java.io.InputStream;
@@ -29,11 +27,8 @@ import java.util.stream.Collectors;
  * 自定义Service实现类
  * @author booty
  */
+@Slf4j
 public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends ServiceImpl<M, T> implements CustomService<T,V> {
-    private static final Logger log = LoggerFactory.getLogger(CustomServiceImpl.class);
-    static {
-        ConverterHelper.init();
-    }
     @Override
     public <S> V insertByDTO(S s) {
         T entity = this.toEntity(s);
@@ -58,7 +53,7 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
         HashMap<String, Object> map = new HashMap<>();
         map.put("primaryKey", id);
         List<V> vs = this.listByDTO(map);
-        if (vs == null || vs.size()==0 ) {
+        if (vs == null || vs.isEmpty()) {
             return null;
         }
         if(vs.size() > 1) {
@@ -76,7 +71,7 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
     @Override
     public <S> V oneByDTO(S s) {
         List<V> vs = listByDTO(s);
-        if (vs == null || vs.size()==0 ) {
+        if (vs == null || vs.isEmpty()) {
             return null;
         }
         if(vs.size() > 1) {
@@ -88,7 +83,7 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
     @Override
     public <S, U> U oneByDTO(S s, Class<U> clazz) {
         List<U> vs = listByDTO(s,clazz);
-        if (vs == null || vs.size()==0 ) {
+        if (vs == null || vs.isEmpty()) {
             return null;
         }
         if(vs.size() > 1) {

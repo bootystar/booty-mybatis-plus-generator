@@ -1,7 +1,6 @@
 package io.github.bootystar.mybatisplus.core;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.io.InputStream;
@@ -56,9 +55,4 @@ public interface CustomService<T,V> extends IService<T> {
 
     Map<String, Object> toMap(Object source);
 
-    public static void main(String[] args) {
-        CustomServiceImpl<CustomMapper<Object, Object>, Object, Object> service = new CustomServiceImpl(){};
-
-        LambdaQueryChainWrapper<Object> wrapper = service.lambdaQuery();
-    }
 }
