@@ -87,85 +87,6 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
     }
 
     /**
-     * 返回结果类
-     *
-     * @deprecated 请使用{@link io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder#returnStaticMethod(FuncMethod)}代替。
-     * @param returnResultClass 返回结果类
-     * @return {@code Builder }
-     * @author booty
-     *
-     */
-    @Deprecated
-    public U returnResultClass(Class<?> returnResultClass) {
-        if (returnResultClass == null) {
-            this.config.returnResultClass = null;
-            this.config.returnResultClassPackage = null;
-            this.config.returnResultGenericType = false;
-            return this.builder;
-        }
-        this.config.returnResultClassPackage = returnResultClass.getPackage().getName();
-        this.config.returnResultClass = returnResultClass.getSimpleName();
-        return this.builder;
-    }
-
-    /**
-     * 返回结果类
-     *
-     * @deprecated 请使用{@link io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder#returnStaticMethod(FuncMethod)}代替。
-     * @param fullClassName 返回结果类
-     * @return {@code Builder }
-     * @author booty
-     *
-     */
-    @Deprecated
-    public U returnResultClass(String fullClassName) {
-        if (fullClassName == null) {
-            this.config.returnResultClass = null;
-            this.config.returnResultClassPackage = null;
-            this.config.returnResultGenericType = false;
-            return this.builder;
-        }
-        try {
-            Class<?> aClass = Class.forName(fullClassName);
-            return returnResultClass(aClass);
-        }catch (Exception e){
-            log.warn("return class not exist !!! use default instead");
-        }
-        return this.builder;
-    }
-
-
-    /**
-     * 返回结果是否为泛型类型
-     *
-     * @deprecated 请使用{@link io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder#returnStaticMethod(FuncMethod)}代替。
-     * @param isGenericType 是泛型类型
-     * @return {@code Builder }
-     * @author booty
-     *
-     */
-    @Deprecated
-    public U returnResultGenericType(boolean isGenericType) {
-        this.config.returnResultGenericType = isGenericType;
-        return this.builder;
-    }
-
-    /**
-     * 返回结果静态方法名字
-     *
-     * @deprecated 请使用{@link io.github.bootystar.mybatisplus.generator.config.ConfigBaseBuilder#returnStaticMethod(FuncMethod)}代替。
-     * @param name 名字
-     * @return {@code Builder }
-     * @author booty
-     *
-     */
-    @Deprecated
-    public U returnResultDefaultStaticMethodName(String name) {
-        this.config.returnResultDefaultStaticMethodName = name;
-        return this.builder;
-    }
-
-    /**
      * 添加插入排除字段
      *
      * @param fieldNames 字段名称
@@ -479,24 +400,24 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
             String methodName = serializedLambda.getImplMethodName();
             String fullClassName = serializedLambda.getImplClass().replace("/", ".");
             Class<?> clazz = Class.forName(fullClassName);
+            TypeVariable<? extends Class<?>>[] typeParameters = clazz.getTypeParameters();
             try {
-                Method returnMethod = clazz.getDeclaredMethod(methodName);
-                int modifiers = returnMethod.getModifiers();
-                this.returnResultClass(clazz);
-                if (!Modifier.isStatic(modifiers)){
-                    log.warn("return method not a static method !!! may produce error code");
-                }
-            }catch (NoSuchMethodException e){
                 clazz.getConstructor(Object.class);
                 methodName="new "+clazz.getSimpleName();
+            }catch (NoSuchMethodException e){
+                Method returnMethod = clazz.getDeclaredMethod(methodName);
+                int modifiers = returnMethod.getModifiers();
+                if (Modifier.isStatic(modifiers)){
+                    methodName=clazz.getSimpleName()+"."+methodName;
+                }else{
+                    log.warn("return method not a static method or constructor!!! may produce error code");
+                    methodName="new "+clazz.getSimpleName()+"."+methodName;
+                }
             }
-            TypeVariable<? extends Class<?>>[] typeParameters = clazz.getTypeParameters();
-            if (typeParameters.length == 0){
-                log.warn("not a ParameterizedType return class ! use default return instead");
-            }
-            this.returnResultGenericType(true);
-            this.returnResultClass(clazz);
-            this.returnResultDefaultStaticMethodName(methodName);
+            this.config.returnResultClassPackage=clazz.getPackage().getName();
+            this.config.returnResultClass=clazz.getSimpleName();
+            this.config.returnResultGenericType = typeParameters.length>0;
+            this.config.returnResultMethodName= methodName;
         } catch (Exception e){
             log.warn("can't resolve return method , use default return instead");
         }

@@ -114,11 +114,11 @@ public class ${table.controllerName} {
     #if(${returnResultClass})
     public ${returnResultClass}#if(${returnResultGenericType})<${entity}VO>#end insert(#if(${requestBody})@RequestBody #end#if(${enableValidated})@Validated #end${entity}InsertDTO DTO){
     #else
-    public Object insert(#if(${requestBody})@RequestBody #end#if(${addValidated})@Validated #end ${entity}InsertDTO DTO){
+    public ${entity}VO insert(#if(${requestBody})@RequestBody #end#if(${addValidated})@Validated #end ${entity}InsertDTO DTO){
     #end
         ${entity}VO result = baseService.insertByDTO(DTO);
     #if(${returnResultClass})
-        return#if(${returnResultDefaultStaticMethodName}) ${returnResultClass}.${returnResultDefaultStaticMethodName}(result)#else null#end;
+        return ${returnResultMethodName}(result);
     #else
         return result;
     #end
@@ -141,11 +141,11 @@ public class ${table.controllerName} {
 ##    #if(${returnResultClass})
 ##    public ${returnResultClass}#if(${returnResultGenericType})<Boolean>#end insertBatch(#if(${requestBody})@RequestBody #end#if(${enableValidated})@Validated #end List<${entity}InsertDTO> DTOList){
 ##    #else
-##    public Object insertBatch(#if(${requestBody})@RequestBody #end#if(${addValidated})@Validated #end List<${entity}InsertDTO> DTOList){
+##    public Boolean insertBatch(#if(${requestBody})@RequestBody #end#if(${addValidated})@Validated #end List<${entity}InsertDTO> DTOList){
 ##    #end
 ##        Boolean result = baseService.insertBatchByDTO(DTOList);
 ##    #if(${returnResultClass})
-##        return#if(${returnResultDefaultStaticMethodName}) ${returnResultClass}.${returnResultDefaultStaticMethodName}(result)#else null#end;
+##        return ${returnResultMethodName}(result);
 ##    #else
 ##        return result;
 ##    #end
@@ -174,11 +174,11 @@ public class ${table.controllerName} {
     #if(${returnResultClass})
     public ${returnResultClass}#if(${returnResultGenericType})<Boolean>#end update(#if(${requestBody})@RequestBody #end#if(${enableValidated})@Validated #end${entity}UpdateDTO DTO){
     #else
-    public Object update(#if(${requestBody})@RequestBody #end#if(${addValidated})@Validated #end ${entity}UpdateDTO DTO){
+    public Boolean update(#if(${requestBody})@RequestBody #end#if(${addValidated})@Validated #end ${entity}UpdateDTO DTO){
     #end
         Boolean result = baseService.updateByDTO(DTO);
     #if(${returnResultClass})
-        return#if(${returnResultDefaultStaticMethodName}) ${returnResultClass}.${returnResultDefaultStaticMethodName}(result)#else null#end;
+        return ${returnResultMethodName}(result);
     #else
         return result;
     #end
@@ -215,11 +215,11 @@ public class ${table.controllerName} {
     #if(${returnResultClass})
     public ${returnResultClass}#if(${returnResultGenericType})<Boolean>#end delete(#if(${restStyle})@PathVariable#end String id) {
     #else
-    public Object delete(#if(${restStyle})@PathVariable#end String id) {
+    public Boolean delete(#if(${restStyle})@PathVariable#end String id) {
     #end
         Boolean result = baseService.removeById(id);
     #if(${returnResultClass})
-        return#if(${returnResultDefaultStaticMethodName}) ${returnResultClass}.${returnResultDefaultStaticMethodName}(result)#else null#end;
+        return ${returnResultMethodName}(result);
     #else
         return result;
     #end
@@ -256,11 +256,11 @@ public class ${table.controllerName} {
     #if(${returnResultClass})
     public ${returnResultClass}#if(${returnResultGenericType})<${entity}VO>#end get(#if(${restStyle})@PathVariable#end String id){
     #else
-    public Object get(#if(${restStyle})@PathVariable#end String id){
+    public ${entity}VO get(#if(${restStyle})@PathVariable#end String id){
     #end
         ${entity}VO result=baseService.voById(id);
     #if(${returnResultClass})
-        return#if(${returnResultDefaultStaticMethodName}) ${returnResultClass}.${returnResultDefaultStaticMethodName}(result)#else null#end;
+        return ${returnResultMethodName}(result);
     #else
         return result;
     #end
@@ -287,11 +287,11 @@ public class ${table.controllerName} {
     #if(${returnResultClass})
     public ${returnResultClass}#if(${returnResultGenericType})<List<${entity}VO>>#end list(#if(${requestBody}&&${allPost})@RequestBody(required = false) #end${entity}SelectDTO DTO){
     #else
-    public Object list(#if(${requestBody}&&${allPost})@RequestBody(required = false) #end${entity}SelectDTO DTO){
+    public List<${entity}VO> list(#if(${requestBody}&&${allPost})@RequestBody(required = false) #end${entity}SelectDTO DTO){
     #end
         List<${entity}VO> result=baseService.listByDTO(DTO);
     #if(${returnResultClass})
-        return#if(${returnResultDefaultStaticMethodName}) ${returnResultClass}.${returnResultDefaultStaticMethodName}(result)#else null#end;
+        return ${returnResultMethodName}(result);
     #else
         return result;
     #end
@@ -328,11 +328,11 @@ public class ${table.controllerName} {
     #if(${returnResultClass})
     public ${returnResultClass}#if(${returnResultGenericType})<IPage<${entity}VO>>#end page(#if(${requestBody}&&${allPost})@RequestBody(required = false) #end${entity}SelectDTO DTO,#if(${restStyle})@PathVariable#end Long current,#if(${restStyle})@PathVariable#end Long size){
     #else
-    public Object page(#if(${requestBody}&&${allPost})@RequestBody(required = false) #end${entity}SelectDTO DTO,#if(${restStyle})@PathVariable#end Long current,#if(${restStyle})@PathVariable#end Long size){
+    public IPage<${entity}VO> page(#if(${requestBody}&&${allPost})@RequestBody(required = false) #end${entity}SelectDTO DTO,#if(${restStyle})@PathVariable#end Long current,#if(${restStyle})@PathVariable#end Long size){
     #end
         IPage<${entity}VO> result=baseService.pageByDTO(DTO,current,size);
     #if(${returnResultClass})
-        return#if(${returnResultDefaultStaticMethodName}) ${returnResultClass}.${returnResultDefaultStaticMethodName}(result)#else null#end;
+        return ${returnResultMethodName}(result);
     #else
         return result;
     #end
@@ -387,11 +387,11 @@ public class ${table.controllerName} {
     #if(${returnResultClass})
     public ${returnResultClass}#if(${returnResultGenericType})<Boolean>#end importExcel(MultipartFile file) throws IOException {
     #else
-    public Object importFromExcel(MultipartFile file) throws IOException {
+    public Boolean importFromExcel(MultipartFile file) throws IOException {
     #end
         if (file==null || file.isEmpty()){
         #if(${returnResultClass})
-            return#if(${returnResultDefaultStaticMethodName}) ${returnResultClass}.${returnResultDefaultStaticMethodName}(false)#else null#end;
+            return ${returnResultMethodName}(false);
         #else
             return false;
         #end
@@ -399,7 +399,7 @@ public class ${table.controllerName} {
 ##        Boolean result = baseService.importExcel(file.getInputStream(), ${entity}ImportDTO.class);
         Boolean result = baseService.importExcel(file.getInputStream(), #if(${importOnVO})${entity}VO#else${entity}ImportDTO#end.class);
     #if(${returnResultClass})
-        return#if(${returnResultDefaultStaticMethodName}) ${returnResultClass}.${returnResultDefaultStaticMethodName}(result)#else null#end;
+        return ${returnResultMethodName}(result);
     #else
         return result;
     #end
