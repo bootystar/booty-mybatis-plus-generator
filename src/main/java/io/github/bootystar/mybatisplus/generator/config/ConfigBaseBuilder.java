@@ -486,13 +486,13 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
                 if (!Modifier.isStatic(modifiers)){
                     log.warn("return method not a static method !!! may produce error code");
                 }
-                TypeVariable<? extends Class<?>>[] typeParameters = clazz.getTypeParameters();
-                if (typeParameters.length == 0){
-                    log.warn("not a ParameterizedType return class ! use default return instead");
-                }
             }catch (NoSuchMethodException e){
                 clazz.getConstructor(Object.class);
                 methodName="new "+clazz.getSimpleName();
+            }
+            TypeVariable<? extends Class<?>>[] typeParameters = clazz.getTypeParameters();
+            if (typeParameters.length == 0){
+                log.warn("not a ParameterizedType return class ! use default return instead");
             }
             this.returnResultGenericType(true);
             this.returnResultClass(clazz);
