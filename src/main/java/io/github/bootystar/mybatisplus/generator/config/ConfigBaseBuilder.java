@@ -394,25 +394,25 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
      */
     public <Re,Obj> U returnMethod(SFunction<Re, Obj> methodReference){
         try {
-            Method accept = methodReference.getClass().getDeclaredMethod("writeReplace");
-            accept.setAccessible(Boolean.TRUE);
-            SerializedLambda serializedLambda  = (SerializedLambda) accept.invoke(methodReference);
+            Method lambdaMethod = methodReference.getClass().getDeclaredMethod("writeReplace");
+            lambdaMethod.setAccessible(Boolean.TRUE);
+            SerializedLambda serializedLambda  = (SerializedLambda) lambdaMethod.invoke(methodReference);
             String methodName = serializedLambda.getImplMethodName();
             String fullClassName = serializedLambda.getImplClass().replace("/", ".");
             Class<?> clazz = Class.forName(fullClassName);
             TypeVariable<? extends Class<?>>[] typeParameters = clazz.getTypeParameters();
             try {
-                clazz.getConstructor(Object.class);
-                methodName="new "+clazz.getSimpleName();
-            }catch (NoSuchMethodException e){
-                Method returnMethod = clazz.getDeclaredMethod(methodName);
+                Method returnMethod = clazz.getMethod(methodName);
                 int modifiers = returnMethod.getModifiers();
                 if (Modifier.isStatic(modifiers)){
                     methodName=clazz.getSimpleName()+"."+methodName;
                 }else{
-                    log.warn("return method not a static method or constructor!!! may produce error code");
+                    log.warn("return method not a static method !!! may produce error code");
                     methodName="new "+clazz.getSimpleName()+"."+methodName;
                 }
+            }catch (NoSuchMethodException e){
+                clazz.getConstructor(Object.class);
+                methodName="new "+clazz.getSimpleName();
             }
             this.config.returnResultClassPackage=clazz.getPackage().getName();
             this.config.returnResultClass=clazz.getSimpleName();
@@ -421,6 +421,20 @@ public abstract class ConfigBaseBuilder<T extends ConfigBase ,U> implements ICon
         } catch (Exception e){
             log.warn("can't resolve return method , use default return instead");
         }
+        return this.builder;
+    }
+
+    /**
+     * 删除返回方法
+     *
+     * @return {@link U }
+     * @author booty
+     */
+    public U removeReturnMethod(){
+        this.config.returnResultClassPackage=null;
+        this.config.returnResultClass=null;
+        this.config.returnResultGenericType = false;
+        this.config.returnResultMethodName= null;
         return this.builder;
     }
 

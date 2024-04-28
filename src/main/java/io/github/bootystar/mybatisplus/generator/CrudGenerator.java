@@ -2,7 +2,6 @@ package io.github.bootystar.mybatisplus.generator;
 
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
-import io.github.bootystar.mybatisplus.core.Result;
 import io.github.bootystar.mybatisplus.generator.config.child.DefaultConfig;
 
 import java.io.File;
@@ -94,10 +93,6 @@ public class CrudGenerator {
         templateConfigBuilder.mapper("/crud/mapper.java");
         templateConfigBuilder.xml("/crud/mapper.xml");
         templateConfigBuilder.entity("/crud/entity.java");
-//        customConfigBuilder.returnResultClass(Result.class);
-//        customConfigBuilder.returnResultGenericType(true);
-//        customConfigBuilder.returnResultDefaultStaticMethodName("success");
-        customConfigBuilder.returnMethod(Result::success);
         customConfigBuilder.insertExcludeFields(Arrays.asList("createTime","updateTime"));
         customConfigBuilder.updateExcludeFields(Arrays.asList("createTime","updateTime"));
         customConfigBuilder.orderColumn("create_time",true);
