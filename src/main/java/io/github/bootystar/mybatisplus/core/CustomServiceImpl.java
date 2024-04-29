@@ -196,7 +196,7 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
             Class<T> clazz = (Class) pt.getActualTypeArguments()[1];
             t = toTarget(source, clazz);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("toEntity failed =>",e);
             throw new RuntimeException(e);
         }
         return t;
@@ -210,7 +210,7 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
             Class<V> clazz = (Class) pt.getActualTypeArguments()[2];
             v = toTarget(source, clazz);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("toVO failed =>",e);
             throw new RuntimeException(e);
         }
         return v;
@@ -226,7 +226,7 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
             target = clazz.newInstance();
             BeanUtils.copyProperties(source, target);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("toTarget failed =>",e);
             throw new RuntimeException(e);
         }
         return target;
@@ -255,7 +255,7 @@ public abstract class CustomServiceImpl<M extends CustomMapper<T,V>,T,V> extends
                 }
             }
         } catch (Exception e) {
-            log.error("error toMap", e);
+            log.error("toMap failed =>",e);
             throw new RuntimeException(e);
         }
         return map;
