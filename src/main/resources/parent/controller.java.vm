@@ -107,7 +107,7 @@ public class ${table.controllerName} {
      * @author ${author}
      * @since ${nowTime}
      * @param DTO 新增入参对象
-     * @return #if(${returnResultClass})${returnResultClass}#else Object#end
+     * @return #if(${returnResultClass})${returnResultClass}#else ${entity}VO#end
      */
     #end
     @PostMapping("/insert")
@@ -116,11 +116,11 @@ public class ${table.controllerName} {
     #else
     public ${entity}VO insert(#if(${requestBody})@RequestBody #end#if(${addValidated})@Validated #end ${entity}InsertDTO DTO){
     #end
-        ${entity}VO result = baseService.insertByDTO(DTO);
+##        ${entity}VO result = baseService.insertByDTO(DTO);
     #if(${returnResultClass})
-        return ${returnResultMethodName}(result);
+        return ${returnResultMethodName}(baseService.insertByDTO(DTO));
     #else
-        return result;
+        return baseService.insertByDTO(DTO);
     #end
     }
 ##
@@ -163,7 +163,7 @@ public class ${table.controllerName} {
      * @author ${author}
      * @since ${nowTime}
      * @param DTO 修改入参对象
-     * @return #if(${returnResultClass})${returnResultClass}#else Object#end
+     * @return #if(${returnResultClass})${returnResultClass}#else Boolean#end
      */
     #end
     #if(${allPost})
@@ -176,11 +176,11 @@ public class ${table.controllerName} {
     #else
     public Boolean update(#if(${requestBody})@RequestBody #end#if(${addValidated})@Validated #end ${entity}UpdateDTO DTO){
     #end
-        Boolean result = baseService.updateByDTO(DTO);
+##        Boolean result = baseService.updateByDTO(DTO);
     #if(${returnResultClass})
-        return ${returnResultMethodName}(result);
+        return ${returnResultMethodName}(baseService.updateByDTO(DTO));
     #else
-        return result;
+        return baseService.updateByDTO(DTO);
     #end
     }
 #end
@@ -196,7 +196,7 @@ public class ${table.controllerName} {
      * @author ${author}
      * @since ${nowTime}
      * @param id 主键ID|1
-     * @return #if(${returnResultClass})${returnResultClass}#else Object#end
+     * @return #if(${returnResultClass})${returnResultClass}#else Boolean#end
      */
     #end
     #if(${allPost})
@@ -217,11 +217,11 @@ public class ${table.controllerName} {
     #else
     public Boolean delete(#if(${restStyle})@PathVariable#end String id) {
     #end
-        Boolean result = baseService.removeById(id);
+##        Boolean result = baseService.removeById(id);
     #if(${returnResultClass})
-        return ${returnResultMethodName}(result);
+        return ${returnResultMethodName}(baseService.removeById(id));
     #else
-        return result;
+        return baseService.removeById(id);
     #end
     }
 #end
@@ -237,7 +237,7 @@ public class ${table.controllerName} {
      * @author ${author}
      * @since ${nowTime}
      * @param id 主键id
-     * @return #if(${returnResultClass})${returnResultClass}#else Object#end
+     * @return #if(${returnResultClass})${returnResultClass}#else ${entity}VO#end
      */
     #end
     #if(${allPost})
@@ -258,11 +258,11 @@ public class ${table.controllerName} {
     #else
     public ${entity}VO get(#if(${restStyle})@PathVariable#end String id){
     #end
-        ${entity}VO result=baseService.voById(id);
+##        ${entity}VO result=baseService.voById(id);
     #if(${returnResultClass})
-        return ${returnResultMethodName}(result);
+        return ${returnResultMethodName}(baseService.voById(id));
     #else
-        return result;
+        return baseService.voById(id);
     #end
     }
 
@@ -276,7 +276,7 @@ public class ${table.controllerName} {
      * @author ${author}
      * @since ${nowTime}
      * @param DTO 查询条件DTO
-     * @return #if(${returnResultClass})${returnResultClass}#else Object#end
+     * @return #if(${returnResultClass})${returnResultClass}#else ${entity}VO#end
      */
     #end
     #if(${allPost})
@@ -289,11 +289,11 @@ public class ${table.controllerName} {
     #else
     public List<${entity}VO> list(#if(${requestBody}&&${allPost})@RequestBody(required = false) #end${entity}SelectDTO DTO){
     #end
-        List<${entity}VO> result=baseService.listByDTO(DTO);
+##        List<${entity}VO> result=baseService.listByDTO(DTO);
     #if(${returnResultClass})
-        return ${returnResultMethodName}(result);
+        return ${returnResultMethodName}(baseService.listByDTO(DTO));
     #else
-        return result;
+        return baseService.listByDTO(DTO);
     #end
     }
 
@@ -309,7 +309,7 @@ public class ${table.controllerName} {
      * @param current 页码
      * @param size 每页大小
      * @param DTO 查询条件DTO
-     * @return #if(${returnResultClass})${returnResultClass}#else Object#end
+     * @return #if(${returnResultClass})${returnResultClass}#else ${entity}VO#end
      */
     #end
     #if(${allPost})
@@ -330,11 +330,11 @@ public class ${table.controllerName} {
     #else
     public IPage<${entity}VO> page(#if(${requestBody}&&${allPost})@RequestBody(required = false) #end${entity}SelectDTO DTO,#if(${restStyle})@PathVariable#end Long current,#if(${restStyle})@PathVariable#end Long size){
     #end
-        IPage<${entity}VO> result=baseService.pageByDTO(DTO,current,size);
+##        IPage<${entity}VO> result=baseService.pageByDTO(DTO,current,size);
     #if(${returnResultClass})
-        return ${returnResultMethodName}(result);
+        return ${returnResultMethodName}(baseService.pageByDTO(DTO,current,size));
     #else
-        return result;
+        return baseService.pageByDTO(DTO,current,size);
     #end
     }
 #end
@@ -380,7 +380,7 @@ public class ${table.controllerName} {
      * @author ${author}
      * @since ${nowTime}
      * @param file excel文件
-     * @return #if(${returnResultClass})${returnResultClass}#else Object#end
+     * @return #if(${returnResultClass})${returnResultClass}#else Boolean#end
      */
     #end
     @PostMapping("/import")
@@ -397,11 +397,11 @@ public class ${table.controllerName} {
         #end
         }
 ##        Boolean result = baseService.importExcel(file.getInputStream(), ${entity}ImportDTO.class);
-        Boolean result = baseService.importExcel(file.getInputStream(), #if(${importOnVO})${entity}VO#else${entity}ImportDTO#end.class);
+##        Boolean result = baseService.importExcel(file.getInputStream(), #if(${importOnVO})${entity}VO#else${entity}ImportDTO#end.class);
     #if(${returnResultClass})
-        return ${returnResultMethodName}(result);
+        return ${returnResultMethodName}(baseService.importExcel(file.getInputStream(), #if(${importOnVO})${entity}VO#else${entity}ImportDTO#end.class));
     #else
-        return result;
+        return baseService.importExcel(file.getInputStream(), #if(${importOnVO})${entity}VO#else${entity}ImportDTO#end.class);
     #end
     }
 
