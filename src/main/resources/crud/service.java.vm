@@ -15,7 +15,6 @@ import ${basePackage}.${DTOPackage}.${entity}UpdateDTO;
 
 #if(${generateSelect})
 import java.util.List;
-import java.util.Collection;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import ${basePackage}.${DTOPackage}.${entity}SelectDTO;
 import ${basePackage}.${VOPackage}.${entity}VO;
@@ -51,8 +50,10 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     List<${entity}VO> listByDTO(${entity}SelectDTO s);
 
     IPage<${entity}VO> pageByDTO(${entity}SelectDTO s, Long current, Long size);
+        #if(${generateExport})
 
     <U> void exportExcel(${entity}SelectDTO s, OutputStream os, Class<U> clazz);
+        #end
     #end
     #if(${generateImport})
 
